@@ -9,8 +9,8 @@ const withCounter = state('counter', 'setCounter', 0);
 const Counter = withCounter(({ counter, setCounter }) =>
   <div>
     Count: {counter}
-    <button onClick={() => setCounter(n => n + 1)}>Increment</button>
-    <button onClick={() => setCounter(n => n - 1)}>Decrement</button>
+    <button onClick={() => setCounter(counter + 1)}>Increment</button>
+    <button onClick={() => setCounter(counter - 1)}>Decrement</button>
   </div>
 );
 ```
