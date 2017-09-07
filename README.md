@@ -15,6 +15,8 @@ const Counter = withCounter(({ counter, setCounter }) =>
 );
 ```
 
+Live demo: https://codesandbox.io/s/6wvql0x1m3
+
 ## License
 
 MIT
