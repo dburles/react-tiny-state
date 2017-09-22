@@ -12,18 +12,18 @@ export default function state(name, setter, value) {
 
   return function(WrappedComponent) {
     return class extends Component {
-      subscription = subscribe(() => this.setState({}));
-
       componentWillUnmount() {
         this.subscription();
       }
 
+      subscription = subscribe(cb => this.setState({}, cb));
+
       render() {
         return React.createElement(WrappedComponent, {
           ...this.props,
-          [setter]: newValue => {
+          [setter]: (newValue, cb) => {
             value = newValue;
-            subscriptions.forEach(fn => fn());
+            subscriptions.forEach(fn => fn(cb));
           },
           [name]: value,
         });
