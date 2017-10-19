@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-export default function state(name, setter, value) {
+export default function State(
+  name,
+  setter,
+  initialState,
+  setterHandler = value => value
+) {
   const subscriptions = [];
+  let state = initialState;
 
   function subscribe(fn) {
     subscriptions.push(fn);
@@ -10,7 +16,16 @@ export default function state(name, setter, value) {
     };
   }
 
-  return function(WrappedComponent) {
+  function get() {
+    return state;
+  }
+
+  function set(newValue, cb) {
+    state = setterHandler(newValue);
+    subscriptions.forEach(fn => fn(cb));
+  }
+
+  function wrapped(WrappedComponent) {
     return class extends Component {
       componentWillUnmount() {
         this.subscription();
@@ -21,13 +36,15 @@ export default function state(name, setter, value) {
       render() {
         return React.createElement(WrappedComponent, {
           ...this.props,
-          [setter]: (newValue, cb) => {
-            value = newValue;
-            subscriptions.forEach(fn => fn(cb));
-          },
-          [name]: value,
+          [setter]: set,
+          [name]: get()
         });
       }
     };
-  };
+  }
+
+  wrapped.get = get;
+  wrapped.set = set;
+
+  return wrapped;
 }
