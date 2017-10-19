@@ -15,6 +15,24 @@ const Counter = counter(({ counter, setCounter }) =>
 );
 ```
 
+Read and update state through get/set methods:
+
+```js
+const counter = State('counter', 'setCounter', 0);
+console.log(counter.get()); // 0
+console.log(counter.set(5));
+console.log(counter.get()); // 5
+```
+
+Optional update function:
+
+```js
+const counter = State('counter', 'setCounter', 0, value => {
+  // do something here
+  return value;
+});
+```
+
 Live demo: https://codesandbox.io/s/6wvql0x1m3
 
 ## License
