@@ -5,8 +5,8 @@ An idea on simplifying React global state management. The API is very similar to
 ## Usage Example
 
 ```js
-const withCounter = state('counter', 'setCounter', 0);
-const Counter = withCounter(({ counter, setCounter }) =>
+const counter = State('counter', 'setCounter', 0);
+const Counter = counter(({ counter, setCounter }) =>
   <div>
     Count: {counter}
     <button onClick={() => setCounter(counter + 1)}>Increment</button>
