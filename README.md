@@ -24,7 +24,7 @@ console.log(counter.set(5));
 console.log(counter.get()); // 5
 ```
 
-Optional update function:
+Optional async update function:
 
 ```js
 const counter = State('counter', 'setCounter', 0, value => {
