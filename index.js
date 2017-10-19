@@ -23,8 +23,8 @@ export default function State(
 
   async function set(newValue, cb) {
     if (newValue !== state) {
-      shouldUpdate = true;
       state = await setterHandler(newValue);
+      shouldUpdate = true;
       subscriptions.forEach(fn => fn(cb));
     } else {
       shouldUpdate = false;
