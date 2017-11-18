@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
-export default function State(
-  name,
-  setter,
-  initialState,
-  setterHandler = value => value,
-) {
+export default function State(initialState, setterHandler = value => value) {
   const subscriptions = [];
   let state = initialState;
   let shouldUpdate = true;
@@ -21,7 +16,10 @@ export default function State(
     return state;
   }
 
-  async function set(newValue, cb) {
+  async function set(setValue, cb) {
+    const newValue =
+      typeof setValue === 'function' ? setValue(state) : setValue;
+
     if (newValue !== state) {
       state = await setterHandler(newValue);
       shouldUpdate = true;
@@ -31,7 +29,10 @@ export default function State(
     }
   }
 
-  function wrapped(WrappedComponent) {
+  const wrapped = map => WrappedComponent => {
+    if (typeof map !== 'function') {
+      throw Error('State: map function is required');
+    }
     return class extends Component {
       shouldComponentUpdate(nextProps) {
         return nextProps !== this.props || shouldUpdate;
@@ -44,14 +45,18 @@ export default function State(
       subscription = subscribe(cb => this.setState({}, cb));
 
       render() {
-        return React.createElement(WrappedComponent, {
+        const props = {
           ...this.props,
-          [setter]: set,
-          [name]: get(),
-        });
+          ...map({
+            get,
+            set,
+          }),
+        };
+
+        return React.createElement(WrappedComponent, props);
       }
     };
-  }
+  };
 
   wrapped.get = get;
   wrapped.set = set;
