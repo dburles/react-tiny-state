@@ -17,8 +17,8 @@ const StatelessCounter = ({ count, setCounter }) => (
 );
 
 const StatefulCounter = compose(
-  // Pass in a function to map get and set functions to props
-  counter(({ get, set }) => ({ count: get(), setCounter: set })),
+  // Pass in a function to map state and set function to props
+  counter(({ state, set }) => ({ count: state, setCounter: set })),
 )(StatelessCounter);
 ```
 
