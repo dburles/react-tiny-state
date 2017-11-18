@@ -8,16 +8,16 @@ An idea on simple React global state management.
 // Create state container
 const counter = State(0);
 
-const StatelessCounter = ({ counter, setCounter }) => (
+const StatelessCounter = ({ count, setCounter }) => (
   <div>
-    Count: {counter}
-    <button onClick={() => setCounter(counter + 1)}>Increment</button>
-    <button onClick={() => setCounter(counter - 1)}>Decrement</button>
+    Count: {count}
+    <button onClick={() => setCounter(count + 1)}>Increment</button>
+    <button onClick={() => setCounter(count - 1)}>Decrement</button>
   </div>
 );
 
 const StatefulCounter = compose(
-  counter(({ get, set }) => ({ counter: get(), setCounter: set })),
+  counter(({ get, set }) => ({ count: get(), setCounter: set })),
 )(StatelessCounter);
 ```
 
@@ -25,6 +25,7 @@ We can also read and update state directly through get/set methods:
 
 ```js
 const counter = State(0);
+
 console.log(counter.get()); // 0
 console.log(counter.set(5));
 console.log(counter.get()); // 5
