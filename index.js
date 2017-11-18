@@ -29,7 +29,7 @@ export default function State(initialState, setterHandler = value => value) {
     }
   }
 
-  const wrapped = map => WrappedComponent => {
+  const container = map => WrappedComponent => {
     if (typeof map !== 'function') {
       throw Error('State: map function is required');
     }
@@ -58,8 +58,8 @@ export default function State(initialState, setterHandler = value => value) {
     };
   };
 
-  wrapped.get = get;
-  wrapped.set = set;
+  container.get = get;
+  container.set = set;
 
-  return wrapped;
+  return container;
 }
