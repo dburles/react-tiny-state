@@ -35,9 +35,9 @@ console.log(counter.get()); // 5
 Optional update hook (can be async):
 
 ```js
-const counter = State(0, value => {
+const counter = State(0, state => {
   // do something here
-  return value;
+  return state;
 });
 ```
 
