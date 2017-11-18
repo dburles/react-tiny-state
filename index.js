@@ -48,7 +48,7 @@ export default function State(initialState, setterHandler = value => value) {
         const props = {
           ...this.props,
           ...map({
-            get,
+            state,
             set,
           }),
         };
