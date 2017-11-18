@@ -30,6 +30,8 @@ const counter = State(0);
 console.log(counter.get()); // 0
 console.log(counter.set(5));
 console.log(counter.get()); // 5
+console.log(counter.set(state => state * 2);
+console.log(counter.get()); // 10
 ```
 
 Optional update hook (can be async):
