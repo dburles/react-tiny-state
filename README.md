@@ -1,33 +1,39 @@
 # react-tiny-state
 
-An idea on simplifying React global state management. The API is very similar to [Recompose](https://github.com/acdlite/recompose) [withState](https://github.com/acdlite/recompose/blob/master/docs/API.md#withstate) except the generated component contains state unique to each definition, rather than per instance.
+An idea on simple React global state management.
 
 ## Usage Example
 
 ```js
-const counter = State('counter', 'setCounter', 0);
-const Counter = counter(({ counter, setCounter }) =>
+// Create state container
+const counter = State(0);
+
+const StatelessCounter = ({ counter, setCounter }) => (
   <div>
     Count: {counter}
     <button onClick={() => setCounter(counter + 1)}>Increment</button>
     <button onClick={() => setCounter(counter - 1)}>Decrement</button>
   </div>
 );
+
+const StatefulCounter = compose(
+  counter(({ get, set }) => ({ counter: get(), setCounter: set })),
+)(StatelessCounter);
 ```
 
-Read and update state through get/set methods:
+We can also read and update state directly through get/set methods:
 
 ```js
-const counter = State('counter', 'setCounter', 0);
+const counter = State(0);
 console.log(counter.get()); // 0
 console.log(counter.set(5));
 console.log(counter.get()); // 5
 ```
 
-Optional update function (can be async):
+Optional update hook (can be async):
 
 ```js
-const counter = State('counter', 'setCounter', 0, value => {
+const counter = State(0, value => {
   // do something here
   return value;
 });
