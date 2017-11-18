@@ -22,7 +22,7 @@ const StatefulCounter = compose(
 )(StatelessCounter);
 ```
 
-We can also read and update state directly through get/set methods:
+### We can also read and update state directly through get/set methods:
 
 ```js
 const counter = State(0);
