@@ -1,6 +1,6 @@
 # react-tiny-state
 
-An idea on simple React global state management. Demo: https://codesandbox.io/s/6wvql0x1m3.
+Tiny React state containers. Demo: https://codesandbox.io/s/6wvql0x1m3.
 
 ## Usage Example
 
