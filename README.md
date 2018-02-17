@@ -34,12 +34,13 @@ console.log(counter.set(state => state * 2));
 console.log(counter.get()); // 10
 ```
 
-### Create methods if you like
+### Create methods if you like:
 
 ```js
 const counter = State(0);
 counter.increment = () => counter.set(state => state + 1);
 counter.decrement = () => counter.set(state => state - 1);
+counter.doubled = () => counter.get() * 2;
 ```
 
 ## License
