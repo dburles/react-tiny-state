@@ -34,15 +34,6 @@ console.log(counter.set(state => state * 2));
 console.log(counter.get()); // 10
 ```
 
-Optional update hook (can be async):
-
-```js
-const counter = State(0, state => {
-  // do something here
-  return state;
-});
-```
-
 ## License
 
 MIT
