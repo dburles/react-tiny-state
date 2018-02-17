@@ -36,9 +36,11 @@ console.log(counter.get()); // 10
 
 ### Create methods if you like
 
+```js
 const counter = State(0);
 counter.increment = () => counter.set(state => state + 1);
 counter.decrement = () => counter.set(state => state - 1);
+```
 
 ## License
 
