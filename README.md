@@ -1,6 +1,6 @@
 # react-tiny-state
 
-Tiny React state containers. Demo: https://codesandbox.io/s/0v1097mjzv.
+Tiny React state containers. Demo: https://codesandbox.io/s/n3zypmlr4m.
 
 ## Usage Example
 
