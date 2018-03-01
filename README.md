@@ -30,7 +30,7 @@ const StatelessCounter = ({ count, inc, dec }) => (
 ));
 ```
 
-Make a HoC (We're using [Recompose](https://github.com/acdlite/recompose) here too)
+Make a HoC (We're using [Recompose](https://github.com/acdlite/recompose) here too):
 
 ```js
 const withCounter = compose(
