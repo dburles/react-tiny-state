@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 export default function State(initialState, setterHandler = value => value) {
   const subscriptions = [];
   let shouldUpdate = true;
+  let state = initialState;
 
   function subscribe(fn) {
     subscriptions.push(fn);
@@ -30,15 +31,15 @@ export default function State(initialState, setterHandler = value => value) {
   };
 
   function get() {
-    return wrapped.state;
+    return state;
   }
 
   function set(setValue, cb) {
     const newValue =
-      typeof setValue === 'function' ? setValue(wrapped.state) : setValue;
+      typeof setValue === 'function' ? setValue(state) : setValue;
 
-    if (newValue !== wrapped.state) {
-      wrapped.state = setterHandler(newValue);
+    if (newValue !== state) {
+      state = setterHandler(newValue);
       shouldUpdate = true;
       subscriptions.forEach(fn => fn(cb));
     } else {
