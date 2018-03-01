@@ -13,8 +13,8 @@ const counter = State(0);
 Make some functions (if we wish):
 
 ```js
-increment = () => counter.set(state => state + 1);
-decrement = () => counter.set(state => state - 1);
+const increment = () => counter.set(state => state + 1);
+const decrement = () => counter.set(state => state - 1);
 ```
 
 A simple React component:
@@ -44,6 +44,12 @@ const withCounter = compose(
     dec: () => () => decrement(),
   }),
 );
+```
+
+Then decorate our component:
+
+```js
+const StatefulCounter = withCounter(StatelessCounter);
 ```
 
 ### Read and update state anywhere:
