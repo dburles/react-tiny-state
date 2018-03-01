@@ -11,12 +11,12 @@ export default function State(initialState, setterHandler = value => value) {
     };
   }
 
-  async function set(setValue, cb) {
+  function set(setValue, cb) {
     const newValue =
       typeof setValue === 'function' ? setValue(wrapped.state) : setValue;
 
     if (newValue !== wrapped.state) {
-      wrapped.state = await setterHandler(newValue);
+      wrapped.state = setterHandler(newValue);
       shouldUpdate = true;
       subscriptions.forEach(fn => fn(cb));
     } else {
@@ -37,19 +37,7 @@ export default function State(initialState, setterHandler = value => value) {
       subscription = subscribe(cb => this.setState({}, cb));
 
       render() {
-        const props = {
-          ...Object.keys(wrapped).reduce((obj, key) => {
-            obj[key] = wrapped[key];
-            return obj;
-          }, {}),
-          state: wrapped.state,
-          set,
-        };
-
-        return React.createElement(WrappedComponent, {
-          ...this.props,
-          ...(typeof map === 'function' ? map(props) : props),
-        });
+        return React.createElement(WrappedComponent, this.props);
       }
     };
   };
