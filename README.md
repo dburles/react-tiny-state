@@ -37,7 +37,7 @@ const withCounter = compose(
   // Calling the state container as a function returns a higher order component:
   counter(),
   withProps(() => ({
-    count: counter.state,
+    count: counter.get(),
   })),
   withHandlers({
     inc: () => () => increment(),
@@ -59,11 +59,11 @@ Though we only have reactivity within React context
 ```js
 const counter = State(0);
 
-console.log(counter.state); // 0
+console.log(counter.get()); // 0
 console.log(counter.set(5));
-console.log(counter.state)); // 5
+console.log(counter.get())); // 5
 console.log(counter.set(state => state * 2));
-console.log(counter.state)); // 10
+console.log(counter.get())); // 10
 ```
 
 ## License
