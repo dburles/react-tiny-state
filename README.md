@@ -36,9 +36,9 @@ Make a HoC (We're using [Recompose](https://github.com/acdlite/recompose) here t
 const withCounter = compose(
   // Calling the state container as a function returns a higher order component:
   counter(),
-  mapProps(() => ({
+  withProps({
     count: counter.state,
-  })),
+  }),
   withHandlers({
     inc: () => () => increment(),
     dec: () => () => decrement(),
