@@ -11,20 +11,7 @@ export default function State(initialState, setterHandler = value => value) {
     };
   }
 
-  function set(setValue, cb) {
-    const newValue =
-      typeof setValue === 'function' ? setValue(wrapped.state) : setValue;
-
-    if (newValue !== wrapped.state) {
-      wrapped.state = setterHandler(newValue);
-      shouldUpdate = true;
-      subscriptions.forEach(fn => fn(cb));
-    } else {
-      shouldUpdate = false;
-    }
-  }
-
-  const wrapped = map => WrappedComponent => {
+  const wrapped = () => WrappedComponent => {
     return class extends Component {
       shouldComponentUpdate(nextProps) {
         return nextProps !== this.props || shouldUpdate;
@@ -42,8 +29,25 @@ export default function State(initialState, setterHandler = value => value) {
     };
   };
 
+  function get() {
+    return wrapped.state;
+  }
+
+  function set(setValue, cb) {
+    const newValue =
+      typeof setValue === 'function' ? setValue(wrapped.state) : setValue;
+
+    if (newValue !== wrapped.state) {
+      wrapped.state = setterHandler(newValue);
+      shouldUpdate = true;
+      subscriptions.forEach(fn => fn(cb));
+    } else {
+      shouldUpdate = false;
+    }
+  }
+
+  wrapped.get = get;
   wrapped.set = set;
-  wrapped.state = initialState;
 
   return wrapped;
 }
