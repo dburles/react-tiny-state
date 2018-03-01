@@ -10,43 +10,45 @@ Create a state container, passing in the default state:
 const counter = State(0);
 ```
 
-Attach methods (if we wish):
+Make some functions (if we wish):
 
 ```js
-counter.increment = () => counter.set(state => state + 1);
-counter.decrement = () => counter.set(state => state - 1);
+increment = () => counter.set(state => state + 1);
+decrement = () => counter.set(state => state - 1);
 ```
 
 A simple React component:
 
 ```js
-const StatelessCounter = ({ state, increment, decrement }) => (
+const StatelessCounter = ({ count, inc, dec }) => (
   <div>
-    Count: {state}
+    Count: {count}
     <br />
-    <button onClick={() => increment()}>Increment</button>
-    <button onClick={() => decrement()}>Decrement</button>
+    <button onClick={inc}>Increment</button>
+    <button onClick={dec}>Decrement</button>
   </div>
 ));
 ```
 
-Calling the state container as a function returns a higher order component:
+Make a HoC (We're using [Recompose](https://github.com/acdlite/recompose) here too)
 
 ```js
-const StatefulCounter = counter()(StatelessCounter);
+const withCounter = compose(
+  // Calling the state container as a function returns a higher order component:
+  counter(),
+  mapProps(() => ({
+    count: counter.state,
+  })),
+  withHandlers({
+    inc: () => () => increment(),
+    dec: () => () => decrement(),
+  }),
+);
 ```
 
-We can optionally provide a function to map prop names:
+### Read and update state anywhere:
 
-```js
-const StatefulCounter = counter(({ state, increment, decrement }) => ({
-  count: state,
-  inc: increment,
-  dec: decrement,
-}))(StatelessCounter);
-```
-
-### Read and update state outside of React:
+Though we only have reactivity within React context
 
 ```js
 const counter = State(0);
