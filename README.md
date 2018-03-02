@@ -4,11 +4,28 @@ Tiny React state containers. Demo: https://codesandbox.io/s/n3zypmlr4m.
 
 ## Usage Example
 
+### Create a state container
+
 Create a state container, passing in the default state:
 
 ```js
 const counter = State(0);
 ```
+
+This results in a function that provides a `get` and `set` method.
+
+```js
+const counter = State(0);
+
+console.log(counter.get()); // 0
+console.log(counter.set(5));
+console.log(counter.get())); // 5
+// we can also pass in a function to access the current state
+console.log(counter.set(state => state * 2)); 
+console.log(counter.get())); // 10
+```
+
+### Connect a React component
 
 Make some functions (if we wish):
 
@@ -32,6 +49,8 @@ const StatelessCounter = ({ count, inc, dec }) => (
 
 Make a HoC (We're using [Recompose](https://github.com/acdlite/recompose) here too):
 
+We connect and subscribe to state changes by calling the state container as a function.
+
 ```js
 const withCounter = compose(
   // Calling the state container as a function returns a higher order component:
@@ -50,20 +69,6 @@ Then decorate our component:
 
 ```js
 const StatefulCounter = withCounter(StatelessCounter);
-```
-
-### Read and update state anywhere:
-
-Though we only have reactivity within React context
-
-```js
-const counter = State(0);
-
-console.log(counter.get()); // 0
-console.log(counter.set(5));
-console.log(counter.get())); // 5
-console.log(counter.set(state => state * 2));
-console.log(counter.get())); // 10
 ```
 
 ## License
