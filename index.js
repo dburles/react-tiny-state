@@ -49,6 +49,7 @@ export default function State(initialState, setterHandler = value => value) {
 
   wrapped.get = get;
   wrapped.set = set;
+  wrapped.subscribe = subscribe;
 
   return wrapped;
 }
