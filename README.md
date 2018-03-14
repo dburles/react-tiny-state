@@ -12,7 +12,7 @@ Create a state container, passing in the default state:
 const counter = State(0);
 ```
 
-This results in a function that provides a `get` and `set` method.
+This results in a function that provides a `get`, `set`, and `subscribe` method.
 
 ```js
 const counter = State(0);
@@ -23,6 +23,17 @@ console.log(counter.get())); // 5
 // we can also pass in a function to access the current state
 console.log(counter.set(state => state * 2)); 
 console.log(counter.get())); // 10
+```
+
+The subscribe method allows us to register a callback function to be called anytime `set` is called. 
+`subscribe` returns a function we can call to unsubscribe.
+
+```js
+// Log changes
+const sub = counter.subscribe(() => console.log(`changed: ${counter.get()}`));
+
+// Unsubscribe
+sub();
 ```
 
 ### Connect a React component
